@@ -1,0 +1,14 @@
+Creating your first Rails project.
+
+To create Rails project, use the following command:
+
+> <yellow>rails new</yellow> <project-name>
+
+For example:
+
+> <yellow>rails new helloWorld</yellow>
+
+After created your project, navigate to that folder and run the following command to verify:
+
+> <yellow>cd</yellow> <project-name>
+> <yellow>railsme verify</yellow>

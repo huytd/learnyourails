@@ -103,13 +103,13 @@ def verify_challenge()
 					if (line.index("@output") == 0)
 						check = line.sub!("\n", "")
 						check = line.sub!("@output ", "")
-						puts coloring("Checking output contains <yellow>'" + check + "'</yellow>:\t ")
+						printf coloring("Checking output contains <yellow>%-24s</yellow>\t "), check
 						if (execute_output.index(check) == nil)
-							puts coloring("[ <red>FAILED</red> ]\n")
+							printf coloring("[ <red>FAILED</red> ]\n")
 							verify_success = false
 							break
 						else
-							puts coloring("[ <green>OK</green> ]\n")
+							printf coloring("[ <green>OK</green> ]\n")
 						end
 					end
 				end
@@ -124,6 +124,38 @@ def verify_challenge()
 		end
 
 		# Case 02: Checking files/folder
+		if (verify_header.index("@file_check") == 0)
+			verify_success = true
+			puts "Checking file and folders..."
+			while (line = verify_file.gets)
+				if (line.index("@file") == 0 || line.index("@folder") == 0)
+					check_file_name = line.sub!("\n", "")
+					check_type = ""
+					if (line.index("@file") == 0)
+						check_file_name = line.sub!("@file ", "") 
+						check_type = "file"
+					else
+						check_file_name = line.sub!("@folder ", "") 
+						check_type = "folder"
+					end
+					printf coloring("Checking " + check_type + "\t <yellow>%-24s</yellow> \t"), check_file_name
+					if (File.exist?(check_file_name))
+						printf coloring("[ <green>OK</green> ]\n")
+					else
+						printf coloring("[ <red>FAILED</red> ]\n")
+						verify_success = false
+						break
+					end
+				end
+			end
+
+			if (verify_success)
+				puts coloring("\n<green>Challenge passed!</green>\n\nRun the following command for next challenge:\n\n > <yellow>railsme challenge</yellow>\n\n")
+				process_next_challenge()
+			else
+				puts coloring("\n<red>Verify failed!</red>\n\nPlease fix your submission and try again!")
+			end
+		end
 
 		verify_file.close()
 	else 

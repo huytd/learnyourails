@@ -1,0 +1,14 @@
+@file_check
+@folder app
+@folder app/assets
+@folder app/controllers
+@folder app/views
+@folder app/models
+@folder bin
+@folder config
+@file Gemfile
+@file Gemfile.lock
+@file config/application.rb
+@file config/routes.rb
+@file bin/rails
+@file bin/rake

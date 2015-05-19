@@ -4,7 +4,7 @@
 
 Inspired by **NodeSchool** (learnyounode,...)
 
-![](http://i.imgur.com/oqKonvC.png)
+![](http://i.imgur.com/Me9ZnET.png)
 
 # How to run
 
@@ -63,3 +63,4 @@ The verify rules contains 2 parts:
 
 Implemented rules:
 - **@run**: Run the command, then use `@output` to check the output
+- **@file_check**: Check the folder struct with `@file` and `@folder`
