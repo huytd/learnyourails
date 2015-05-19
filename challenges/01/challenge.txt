@@ -1,3 +1,5 @@
+<yellow>Setting up the environment</yellow>
+
 Hello! 
 
 Welcome to <green>Learn You Rails</green>. The interactive Ruby On Rails course.

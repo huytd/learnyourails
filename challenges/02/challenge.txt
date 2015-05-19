@@ -1,4 +1,4 @@
-Creating your first Rails project.
+<yellow>Creating your first Rails project</yellow>
 
 To create Rails project, use the following command:
 

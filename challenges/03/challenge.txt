@@ -1,0 +1,17 @@
+<yellow>Run your server</yellow>
+
+Now you have your first Rails application created. It's time to let your server run for the first time.
+
+To start the server, type the command:
+
+> <yellow>rails server</yellow>
+
+Or, with shorter command:
+
+> <yellow>rails s</yellow>
+
+Your server will startup and run on <green>http://localhost:8000</green> by default.
+
+Run your server and verify with the following command to reach the next challenge:
+
+> <yellow>railsme verify</yellow>

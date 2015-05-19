@@ -1,4 +1,15 @@
 #!/usr/bin/env ruby
+require 'net/http'
+
+def make_request(method, url)
+	rurl = URI.parse(url)
+	req = Net::HTTP::Get.new(rurl.to_s)
+	res = Net::HTTP.start(rurl.host, rurl.port) {|http|
+  		http.request(req)
+	}
+	return res
+end
+
 def coloring(line)
 	line.gsub!("<light>", "\e[1m")
 	line.gsub!("</light>", "\e[0m")
@@ -152,6 +163,46 @@ def verify_challenge()
 			if (verify_success)
 				puts coloring("\n<green>Challenge passed!</green>\n\nRun the following command for next challenge:\n\n > <yellow>railsme challenge</yellow>\n\n")
 				process_next_challenge()
+			else
+				puts coloring("\n<red>Verify failed!</red>\n\nPlease fix your submission and try again!")
+			end
+		end
+		
+		# Case 3: Request check
+		if (verify_header.index("@request_check") == 0)
+			verify_success = true
+			puts "Checking HTTP request..."
+			while (line = verify_file.gets)
+				if (line.index("@get ") == 0)
+					request_parts = line.sub!("@get ", "")
+					request_parts = request_parts.split(" > ")
+					begin
+						# TODO: POST Method
+
+						result = make_request("GET", request_parts[0])
+
+						# Check HTTP response code
+						if (request_parts[1] == "200")
+							if (result.is_a?(Net::HTTPSuccess))
+								printf coloring("[ <green>OK</green> ]\n")
+							else
+								printf coloring("[ <red>FAILED</red> ]\n")
+								verify_success = false
+								break
+							end
+						end
+
+					rescue
+						printf coloring("[ <red>FAILED</red> ]\n")
+						verify_success = false
+						break
+					end
+				end
+			end
+
+			if (verify_success)
+				puts coloring("\n<green>Challenge passed!</green>\n\nRun the following command for next challenge:\n\n > <yellow>railsme challenge</yellow>\n\n")
+				#process_next_challenge()
 			else
 				puts coloring("\n<red>Verify failed!</red>\n\nPlease fix your submission and try again!")
 			end
