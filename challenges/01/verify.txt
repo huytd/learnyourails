@@ -1,0 +1,3 @@
+@run ruby -v && rails -v
+@output ruby
+@output Rails

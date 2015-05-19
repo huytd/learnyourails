@@ -1,0 +1,140 @@
+#!/usr/bin/env ruby
+def coloring(line)
+	line.gsub!("<light>", "\e[1m")
+	line.gsub!("</light>", "\e[0m")
+
+	line.gsub!("<u>", "\e[4m")
+	line.gsub!("</u>", "\e[0m")
+
+	line.gsub!("<cyan>", "\e[36m")
+	line.gsub!("</cyan>", "\e[0m")
+
+	line.gsub!("<blue>", "\e[34m")
+	line.gsub!("</blue>", "\e[0m")
+
+	line.gsub!("<yellow>", "\e[33m")
+	line.gsub!("</yellow>", "\e[0m")
+
+	line.gsub!("<red>", "\e[31m")
+	line.gsub!("</red>", "\e[0m")
+
+	line.gsub!("<green>", "\e[32m")
+	line.gsub!("</green>", "\e[0m")
+
+	return line
+end
+
+def get_current_challenge() 
+	# Read the current challenge
+	config_file = File.new(File.dirname(__FILE__) + "/config", "r")
+	challenge = config_file.gets
+	config_file.close()
+	return challenge
+end
+
+def print_challenge() 
+	system "clear"
+
+	current_challenge = get_current_challenge()
+	header_text = "<green>CHALLENGE #" + current_challenge + "</green>\n-------------------\n"
+	puts coloring(header_text)
+
+	# Read the challenge content
+	file_name = File.dirname(__FILE__) + "/challenges/" + current_challenge + "/challenge.txt"
+	if (File.exist?(file_name))
+		challenge_file = File.new(file_name, "r")
+		challenge_content = ""
+
+		while (line = challenge_file.gets)
+			line = coloring(line)
+			challenge_content += line
+		end
+
+		challenge_file.close()
+
+		puts challenge_content
+	else
+		puts coloring("<red>Challenge data does not found!</red>")
+	end
+end
+
+def run_command(cmd)
+	output = `#{cmd}` 
+	yield(output)
+end
+
+def reset_all_challenge()
+	IO.write(File.dirname(__FILE__) + "/config", "01")
+end
+
+def process_next_challenge() 
+	current_challenge = get_current_challenge().to_i
+	next_challenge = current_challenge + 1
+	next_challenge_text = ""
+	if (next_challenge <= 9)
+		next_challenge_text = "0" + next_challenge.to_s
+	else
+		next_challenge_text = next_challenge.to_s
+	end
+	IO.write(File.dirname(__FILE__) + "/config", next_challenge_text)
+end
+
+def verify_challenge()
+	system "clear"
+
+	current_challenge = get_current_challenge()
+	header_text = "<yellow>VERIFY CHALLENGE #" + current_challenge + "</yellow>\n-------------------\n"
+	puts coloring(header_text)
+
+	file_name = File.dirname(__FILE__) + "/challenges/" + current_challenge + "/verify.txt"
+	if (File.exist?(file_name))
+		verify_file = File.new(file_name, "r")
+		
+		verify_header = verify_file.gets
+
+		# Case 01: Run command to test
+		if (verify_header.index("@run") == 0)
+			cmd = verify_header.sub!("@run ", "")
+			puts "Executing test..."
+			run_command(cmd) {|execute_output|
+				verify_success = true
+
+				while (line = verify_file.gets)
+					if (line.index("@output") == 0)
+						check = line.sub!("\n", "")
+						check = line.sub!("@output ", "")
+						puts coloring("Checking output contains <yellow>'" + check + "'</yellow>:\t ")
+						if (execute_output.index(check) == nil)
+							puts coloring("[ <red>FAILED</red> ]\n")
+							verify_success = false
+							break
+						else
+							puts coloring("[ <green>OK</green> ]\n")
+						end
+					end
+				end
+				
+				if (verify_success)
+					puts coloring("\n<green>Challenge passed!</green>\n\nRun the following command for next challenge:\n\n > <yellow>railsme challenge</yellow>\n\n")
+					process_next_challenge()
+				else
+					puts coloring("\n<red>Verify failed!</red>\n\nPlease fix your submission and try again!")
+				end
+			}
+		end
+
+		# Case 02: Checking files/folder
+
+		verify_file.close()
+	else 
+		puts coloring("<red>Verify data does not found!</red>")
+	end
+end
+
+if ARGV.count == 0 || ARGV[0] == "challenge"
+	print_challenge()
+elsif ARGV[0] == "verify"
+	verify_challenge()
+elsif ARGV[0] == "reset"
+	reset_all_challenge()
+end

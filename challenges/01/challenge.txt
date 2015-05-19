@@ -1,0 +1,13 @@
+Hello! 
+
+Welcome to <green>Learn You Rails</green>. The interactive Ruby On Rails course.
+
+To start, you first need to have both <green>Ruby</green> and <green>Rails</green> installed on your system.
+
+<light><yellow>[Install instruction]</yellow></light>
+
+To verify your challenge result and go to next challenge, please run:
+
+> <yellow>railsme verify</yellow>
+
+Good luck!
