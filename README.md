@@ -16,6 +16,24 @@ export PATH=$PATH:"~/Code/learnyourails"
 source ~/.bash_profile
 ```
 
+Then you can run **LearnYouRails** anywhere via Terminal, to see challenge content:
+
+```
+railsme
+```
+
+or 
+
+```
+railsme challenge
+```
+
+To verify your challenge submission:
+
+```
+railsme verify
+```
+
 # How to create challenge
 
 The challenges are stored in `challenges` folder. In this folder, we have the challenge number (01, 02, 03,...)
@@ -24,7 +42,7 @@ Each challenge has 2 files:
 - **challenge.txt**: contains content of the challenge
 - **verify.txt**: contains the verify rules for this challenge
 
-## Challenge Content
+### Challenge Content
 
 The challenge content is a simple text file, support some markup color:
 - `<red></red>`: Red color
@@ -35,7 +53,7 @@ The challenge content is a simple text file, support some markup color:
 - `<light></light>`: Make the color lighter
 - `<u></u>`: Underline
 
-## The Verify Rules
+### Verify Rules
 
 The verify rules contains 2 parts:
 - **Rule header**: The first line of the rule file, define type of rule
