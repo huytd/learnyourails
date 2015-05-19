@@ -4,7 +4,7 @@
 
 Inspired by **NodeSchool** (learnyounode,...)
 
-[Screenshot](http://i.imgur.com/oqKonvC.png)
+![](http://i.imgur.com/oqKonvC.png)
 
 # How to run
 
