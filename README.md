@@ -4,6 +4,8 @@
 
 Inspired by **NodeSchool** (learnyounode,...)
 
+[Screenshot](http://i.imgur.com/oqKonvC.png)
+
 # How to run
 
 To run **LearnYouRails**, you need to config system path to this folder, for example:
