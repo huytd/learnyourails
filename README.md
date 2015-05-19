@@ -27,13 +27,13 @@ Each challenge has 2 files:
 ## Challenge Content
 
 The challenge content is a simple text file, support some markup color:
-- **<red></red>**: Red color
-- **<yellow></yellow>**: Yellow color
-- **<blue></blue>**: Blue color
-- **<cyan></cyan>**: Green color
-- **<green></green>**: Green color
-- **<light></light>**: Make the color lighter
-- **<u></u>**: Underline
+- `<red></red>`: Red color
+- `<yellow></yellow>`: Yellow color
+- `<blue></blue>`: Blue color
+- `<cyan></cyan>`: Green color
+- `<green></green>`: Green color
+- `<light></light>`: Make the color lighter
+- `<u></u>`: Underline
 
 ## The Verify Rules
 
